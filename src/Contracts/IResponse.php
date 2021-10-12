@@ -15,26 +15,6 @@ interface IResponse
     public const STATUS_SUCCESSFUL = 'SUCCESSFUL';
 
     /**
-     * Replace data to the data list by key.
-     *
-     * @param string $key
-     * @param $value
-     *
-     * @return void
-     */
-    public function replaceData(string $key, $value): void;
-
-    /**
-     * Replace an Error to the error list by key.
-     *
-     * @param string $key
-     * @param AppError $error
-     *
-     * @return void
-     */
-    public function replaceError(string $key, AppError $error): void;
-
-    /**
      * Add data to the data list by key.
      *
      * @param string $key

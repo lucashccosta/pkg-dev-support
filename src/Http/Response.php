@@ -10,26 +10,9 @@ use Dev\Support\Error\AppError;
 
 class Response implements IResponse
 {
-    /**
-     * @var string $status
-     */
-    private $status;
-
-    /**
-     * Contains the error list
-     * (This list contains of data to show in case of failure)
-     *
-     * @var ICollection $errors
-     */
-    private $errors;
-
-    /**
-     * Contains the data list
-     * (This list contains of data to show in case of success)
-     *
-     * @var ICollection $data
-     */
-    private $data;
+    private string $status;
+    private ICollection $data;
+    private ?ICollection $errors;
 
     /**
      * ICollectionResponse constructor.
@@ -37,39 +20,19 @@ class Response implements IResponse
      * @param ICollection $data
      * @param ICollection $errors
      */
-    public function __construct(ICollection $data, ICollection $errors)
+    public function __construct(ICollection $data, ?ICollection $errors = null)
     {
         $this->data = $data;
         $this->errors = $errors;
+
+        if (!is_null($errors)) $this->status = IResponse::STATUS_FAILED;
+        else $this->status = IResponse::STATUS_SUCCESSFUL;
     }
 
     /**
-     * ATTENTION: If the data is an array, the content will be added to the existing array
      * {@inheritDoc}
      */
     public function addData(string $key, $value): void
-    {
-        $values = $this->data->get($key, []);
-        is_array($values) ?: $values = [$values];
-        $values[] = $value;
-        $this->data = $this->data->with($key, $values);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function addError(string $key, AppError $error): void
-    {
-        $errors = $this->errors->get($key, []);
-        is_array($errors) ?: $errors = [$errors];
-        $errors[] = $error;
-        $this->errors = $this->errors->with($key, $errors);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function replaceData(string $key, $value): void
     {
         $this->data = $this->data->with($key, $value);
     }
@@ -77,7 +40,7 @@ class Response implements IResponse
     /**
      * {@inheritDoc}
      */
-    public function replaceError(string $key, AppError $error): void
+    public function addError(string $key, AppError $error): void
     {
         $this->errors = $this->errors->with($key, $error);
     }
@@ -151,7 +114,7 @@ class Response implements IResponse
      */
     public function setAsFailed(): void
     {
-        $this->status = Response::STATUS_FAILED;
+        $this->status = IResponse::STATUS_FAILED;
     }
 
     /**
@@ -159,6 +122,6 @@ class Response implements IResponse
      */
     public function setAsSuccess(): void
     {
-        $this->status = Response::STATUS_SUCCESSFUL;
+        $this->status = IResponse::STATUS_SUCCESSFUL;
     }
 }
