@@ -6,6 +6,7 @@ namespace Tests\Unit\Common;
 
 use Dev\Support\Common\Collection;
 use Dev\Support\Contracts\ICollection;
+use Generator;
 use PHPUnit\Framework\TestCase;
 
 class CollectionTest extends TestCase
@@ -144,5 +145,13 @@ class CollectionTest extends TestCase
 
         self::assertCount(1, $result);
         self::assertEquals(['value'], $result);
+    }
+
+    public function testShouldGetIterator()
+    {
+        $generator = $this->collection->getIterator();
+
+        self::assertInstanceOf(Generator::class, $generator);
+        $generator->next();
     }
 }
