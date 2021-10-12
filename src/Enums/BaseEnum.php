@@ -9,9 +9,9 @@ use ReflectionClass;
 
 abstract class BaseEnum
 {
-    protected string $value;
+    protected $value;
 
-    public function __construct(string $value)
+    public function __construct($value)
     {
         $constants = static::getAllowedValues();
 
