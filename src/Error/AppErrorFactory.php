@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Spportz\Support\Error;
+namespace Dev\Support\Error;
 
-use Spportz\Support\Enums\AppErrorType;
-use Spportz\Support\Enums\AppResponseCode;
+use Dev\Support\Enums\AppErrorType;
+use Dev\Support\Enums\AppResponseCode;
 
 final class AppErrorFactory
 {

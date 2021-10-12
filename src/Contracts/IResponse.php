@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Spportz\Support\Contracts;
+namespace Dev\Support\Contracts;
 
-use Spportz\Support\Error\AppError;
+use Dev\Support\Error\AppError;
 
 interface IResponse
 {

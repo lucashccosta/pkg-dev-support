@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Spportz\Support\Contracts;
+namespace Dev\Support\Contracts;
 
 interface IValidableUseCase
 {

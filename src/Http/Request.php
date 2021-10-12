@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Spportz\Support\Http;
+namespace Dev\Support\Http;
 
-use Spportz\Support\Common\CloneArrayTrait;
-use Spportz\Support\Contracts\ICollection;
-use Spportz\Support\Contracts\IRequest;
+use Dev\Support\Common\CloneArrayTrait;
+use Dev\Support\Contracts\ICollection;
+use Dev\Support\Contracts\IRequest;
 
 class Request implements IRequest
 {

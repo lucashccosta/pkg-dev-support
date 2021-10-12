@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Spportz\Support\Http;
+namespace Dev\Support\Http;
 
-use Spportz\Support\Common\CloneArrayTrait;
-use Spportz\Support\Contracts\ICollection;
+use Dev\Support\Common\CloneArrayTrait;
+use Dev\Support\Contracts\ICollection;
 
 class Collection implements ICollection
 {

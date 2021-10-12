@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Spportz\Support\Http;
+namespace Dev\Support\Http;
 
-use Spportz\Support\Contracts\ICollection;
-use Spportz\Support\Contracts\IResponse;
-use Spportz\Support\Error\AppError;
+use Dev\Support\Contracts\ICollection;
+use Dev\Support\Contracts\IResponse;
+use Dev\Support\Error\AppError;
 
 class Response implements IResponse
 {

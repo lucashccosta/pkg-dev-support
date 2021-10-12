@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Spportz\Support\Enums;
+namespace Dev\Support\Enums;
 
 class AppErrorType extends BaseEnum
 {

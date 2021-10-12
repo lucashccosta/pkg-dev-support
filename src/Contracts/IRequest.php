@@ -1,6 +1,6 @@
 <?php
 
-namespace Spportz\Support\Contracts;
+namespace Dev\Support\Contracts;
 
 interface IRequest
 {

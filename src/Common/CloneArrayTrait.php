@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Spportz\Support\Common;
+namespace Dev\Support\Common;
 
 trait CloneArrayTrait
 {
@@ -13,7 +13,7 @@ trait CloneArrayTrait
      *
      * @return array
      */
-    protected function cloneArray(array &$array): array
+    public function cloneArray(array &$array): array
     {
         foreach ($array as $key => $value) {
             if (is_array($value)) {
