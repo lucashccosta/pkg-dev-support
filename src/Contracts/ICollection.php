@@ -30,7 +30,7 @@ interface ICollection extends IteratorAggregate
      *
      * @return bool
      */
-    public function contains($item, bool $strict = true): bool;
+    public function contains(string $item, bool $strict = true): bool;
 
     /**
      * Return the value of required key.
@@ -41,7 +41,7 @@ interface ICollection extends IteratorAggregate
      *
      * @return mixed
      */
-    public function get($key, $default = null);
+    public function get(string $key, $default = null);
 
     /**
      * Return true if key is set, otherwise false.
@@ -50,7 +50,7 @@ interface ICollection extends IteratorAggregate
      *
      * @return bool
      */
-    public function has($key): bool;
+    public function has(string $key): bool;
 
     /**
      * Return an array containing all the collection's keys.
@@ -84,7 +84,7 @@ interface ICollection extends IteratorAggregate
      * @return ICollection
      */
 
-    public function with($key, $item): self;
+    public function with(string $key, $item): self;
 
     /**
      * Return a Collection without a specific key.
@@ -93,7 +93,7 @@ interface ICollection extends IteratorAggregate
      *
      * @return ICollection
      */
-    public function without($key): self;
+    public function without(string $key): self;
 
     /**
      * Return an array containing all the collection's items.
@@ -105,8 +105,6 @@ interface ICollection extends IteratorAggregate
     /**
      * Return a new cloned object
      * It's recommended to deep clone the object
-     *
-     * @return ICollection
      */
-    public function __clone(): self;
+    public function __clone(): void;
 }

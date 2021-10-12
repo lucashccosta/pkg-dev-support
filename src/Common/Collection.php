@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Dev\Support\Http;
+namespace Dev\Support\Common;
 
 use Dev\Support\Common\CloneArrayTrait;
 use Dev\Support\Contracts\ICollection;
@@ -42,7 +42,7 @@ class Collection implements ICollection
     /**
      * {@inheritDoc}
      */
-    public function contains($item, bool $strict = true): bool
+    public function contains(string $item, bool $strict = true): bool
     {
         return in_array($item, $this->items, $strict);
     }
@@ -50,7 +50,7 @@ class Collection implements ICollection
     /**
      * {@inheritDoc}
      */
-    public function get($key, $default = null)
+    public function get(string $key, $default = null)
     {
         return $this->items[$key] ?? $default;
     }
@@ -58,7 +58,7 @@ class Collection implements ICollection
     /**
      * {@inheritDoc}
      */
-    public function has($key): bool
+    public function has(string $key): bool
     {
         return isset($this->items[$key]);
     }
@@ -82,7 +82,7 @@ class Collection implements ICollection
     /**
      * {@inheritDoc}
      */
-    public function mergeWith(self...$collections): self
+    public function mergeWith(ICollection...$collections): self
     {
         $clone = clone $this;
         foreach ($collections as $collection) {
@@ -103,7 +103,7 @@ class Collection implements ICollection
     /**
      * {@inheritDoc}
      */
-    public function with($key, $item): self
+    public function with(string $key, $item): self
     {
         $clone = clone $this;
         $clone->items[$key] = $item;
@@ -114,7 +114,7 @@ class Collection implements ICollection
     /**
      * {@inheritDoc}
      */
-    public function without($key): self
+    public function without(string $key): self
     {
         $clone = clone $this;
         unset($clone->items[$key]);
@@ -133,7 +133,7 @@ class Collection implements ICollection
     /**
      * {@inheritDoc}
      */
-    public function __clone()
+    public function __clone(): void
     {
         $this->cloneArray($this->items);
     }
