@@ -21,9 +21,9 @@ final class AppErrorFactory
      *
      * @return AppError
      */
-    public function build(
+    public static function build(
         AppResponseCode $code,
-        ?AppErrorType $errorType = null,
+        AppErrorType $errorType,
         string $pointer = '',
         string $title = '',
         string $detail = '',
