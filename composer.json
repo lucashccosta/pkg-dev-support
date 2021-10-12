@@ -1,0 +1,19 @@
+{
+    "name": "spportz-org/pkg-spp-dev-support",
+    "description": "Pacote com classes de suporte para o desenvolvimento",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Lucas Costa",
+            "email": "lucas.hcruz.costa@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+          "Spportz\\Support\\": "src/"
+        }
+    },
+    "require": {
+        "php": "^8.0"
+    }
+}
