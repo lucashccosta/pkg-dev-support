@@ -141,7 +141,7 @@ class Collection implements ICollection
     /**
      * {@inheritDoc}
      */
-    public function getIterator()
+    public function getIterator(): iterable
     {
         foreach ($this->items as $key => $item) {
             yield $key => $item;
