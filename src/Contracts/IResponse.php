@@ -83,20 +83,20 @@ interface IResponse
     /**
      * Set the response as failed.
      * 
-     * @param AppResponseCode $code
+     * @param AppResponseCode|null $code
      *
      * @return self
      */
-    public function setAsFailed(AppResponseCode $code = 500): self;
+    public function setAsFailed(?AppResponseCode $code = null): self;
 
     /**
      * Set the response as success.
      * 
-     * @param AppResponseCode $code
+     * @param AppResponseCode|null $code
      *
      * @return self
      */
-    public function setAsSuccess(AppResponseCode $code = 200): self;
+    public function setAsSuccess(?AppResponseCode $code = null): self;
 
     /**
      *  Set the status code.

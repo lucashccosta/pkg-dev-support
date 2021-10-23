@@ -104,10 +104,14 @@ class Response implements IResponse, JsonSerializable
     /**
      * {@inheritDoc}
      */
-    public function setAsFailed(AppResponseCode $code = 500): self
+    public function setAsFailed(?AppResponseCode $code = null): self
     {
         $this->status = IResponse::STATUS_FAILED;
-        $this->statusCode = $code->getValue();
+        $this->statusCode = (
+            is_null($code) 
+            ? AppResponseCode::SERVER_ERROR
+            : $code->getValue()
+        );
 
         return $this;
     }
@@ -115,10 +119,14 @@ class Response implements IResponse, JsonSerializable
     /**
      * {@inheritDoc}
      */
-    public function setAsSuccess(AppResponseCode $code = 200): self
+    public function setAsSuccess(?AppResponseCode $code = null): self
     {
         $this->status = IResponse::STATUS_SUCCESSFUL;
-        $this->statusCode = $code->getValue();
+        $this->statusCode = (
+            is_null($code) 
+            ? AppResponseCode::SUCCESS
+            : $code->getValue()
+        );
 
         return $this;
     }
