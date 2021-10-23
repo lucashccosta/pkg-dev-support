@@ -14,7 +14,7 @@ interface IRequest
     /**
      * Remove all the data.
      *
-     * @return IRequest
+     * @return self
      */
     public function clear(): self;
 
@@ -22,12 +22,12 @@ interface IRequest
      * Return the value of required key.
      * Default if is not found.
      *
-     * @param mixed $key
+     * @param string $key
      * @param mixed|null $default
      *
-     * @return mixed
+     * @return mixed|null
      */
-    public function get(string $key, $default = null);
+    public function get(string $key, $default = null): mixed|null;
 
     /**
      * Return true if key is set, otherwise false.
@@ -41,19 +41,19 @@ interface IRequest
     /**
      * Return a request with a new data value.
      *
-     * @param mixed $data
-     * @param mixed $key
+     * @param string $key
+     * @param mixed $item
      *
-     * @return IRequest
+     * @return self
      */
-    public function with(string $data, $key = null): self;
+    public function add(string $key, mixed $item): self;
 
     /**
      * Return a request without a specific key.
      *
      * @param mixed $key
      *
-     * @return IRequest
+     * @return self
      */
-    public function without(string $key): self;
+    public function remove(string $key): self;
 }

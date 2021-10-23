@@ -9,32 +9,18 @@ use Dev\Support\Enums\AppResponseCode;
 
 final class AppErrorFactory
 {
-    /**
-     * Create an ApplicationError
-     *
-     * @param $code
-     * @param string $errorType
-     * @param string $pointer
-     * @param string $title
-     * @param string $detail
-     * @param array $meta
-     *
-     * @return AppError
-     */
     public static function build(
         AppResponseCode $code,
-        AppErrorType $errorType,
-        string $pointer = '',
-        string $title = '',
-        string $detail = '',
+        AppErrorType $type,
+        string $publicMessage = '',
+        string $privateMessage = '',
         array $meta = []
     ): AppError {
         return new AppError(
             $code,
-            $errorType,
-            $pointer,
-            $title,
-            $detail,
+            $type,
+            $publicMessage,
+            $privateMessage,
             $meta
         );
     }

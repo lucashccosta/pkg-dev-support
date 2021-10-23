@@ -10,35 +10,22 @@ use Dev\Support\Enums\AppErrorType;
 class AppError
 {
     private AppResponseCode $code;
-    private AppErrorType $errorType;
-    private string $pointer;
-    private string $title;
-    private string $detail;
+    private AppErrorType $type;
+    private string $publicMessage;
+    private string $privateMessage;
     private array $meta;
 
-    /**
-     * ApplicationError constructor.
-     *
-     * @param AppErrorCode $code
-     * @param AppErrorType $errorType
-     * @param string $pointer
-     * @param string $title
-     * @param string $detail
-     * @param array $meta
-     */
     public function __construct(
         AppResponseCode $code,
-        AppErrorType $errorType,
-        string $pointer = '',
-        string $title = '',
-        string $detail = '',
+        AppErrorType $type,
+        string $publicMessage = '',
+        string $privateMessage = '',
         array $meta = []
     ) {
         $this->code = $code;
-        $this->errorType = $errorType;
-        $this->pointer = $pointer;
-        $this->title = $title;
-        $this->detail = $detail;
+        $this->type = $type;
+        $this->publicMessage = $publicMessage;
+        $this->privateMessage = $privateMessage;
         $this->meta = $meta;
     }
 
@@ -55,31 +42,23 @@ class AppError
      */
     public function getErrorType(): AppErrorType
     {
-        return $this->errorType;
+        return $this->type;
     }
 
     /**
      * @return string
      */
-    public function getPointer(): string
+    public function getPublicMessage(): string
     {
-        return $this->pointer;
+        return $this->publicMessage;
     }
 
     /**
      * @return string
      */
-    public function getTitle(): string
+    public function getPrivateMessage(): string
     {
-        return $this->title;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDetail(): string
-    {
-        return $this->detail;
+        return $this->privateMessage;
     }
 
     /**

@@ -4,45 +4,45 @@ declare(strict_types=1);
 
 namespace Dev\Support\Http;
 
-use Dev\Support\Contracts\ICollection;
 use Dev\Support\Contracts\IResponse;
+use Dev\Support\Enums\AppResponseCode;
 use Dev\Support\Error\AppError;
+use JsonSerializable;
 
-class Response implements IResponse
+class Response implements IResponse, JsonSerializable
 {
     private string $status;
-    private ICollection $data;
-    private ?ICollection $errors;
+    private int $statusCode = 200;
+    private ?array $data = null;
+    private ?AppError $error = null;
 
-    /**
-     * ICollectionResponse constructor.
-     *
-     * @param ICollection $data
-     * @param ICollection $errors
-     */
-    public function __construct(ICollection $data, ?ICollection $errors = null)
+    public function __construct(?array $data = null, ?AppError $error = null)
     {
         $this->data = $data;
-        $this->errors = $errors;
+        $this->error = $error;
 
-        if (!is_null($errors)) $this->status = IResponse::STATUS_FAILED;
+        if (!is_null($error)) $this->status = IResponse::STATUS_FAILED;
         else $this->status = IResponse::STATUS_SUCCESSFUL;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function addData(string $key, $value): void
+    public function addData(mixed $item, ?string $key = null): self
     {
-        $this->data = $this->data->with($key, $value);
+        (!empty($key)) ? $this->data[$key] = $item : $this->data = $item;
+
+        return $this;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function addError(string $key, AppError $error): void
+    public function addError(AppError $error): self
     {
-        $this->errors = $this->errors->with($key, $error);
+        $this->error = $error;
+
+        return $this;
     }
 
     /**
@@ -50,15 +50,23 @@ class Response implements IResponse
      */
     public function getData(): array
     {
-        return $this->data->all();
+        return $this->data;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getErrors(): array
+    public function getError(): AppError
     {
-        return $this->errors->all();
+        return $this->error;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getStatusCode(): int
+    {
+        return $this->statusCode;
     }
 
     /**
@@ -66,15 +74,15 @@ class Response implements IResponse
      */
     public function hasData(): bool
     {
-        return $this->data->length() !== 0;
+        return $this->data?->length() !== 0;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function hasErrors(): bool
+    public function hasError(): bool
     {
-        return $this->errors->length() !== 0;
+        return !is_null($this->error);
     }
 
     /**
@@ -96,32 +104,44 @@ class Response implements IResponse
     /**
      * {@inheritDoc}
      */
-    public function removeData(string $key): void
-    {
-        $this->data = $this->data->without($key);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function removeError(string $key): void
-    {
-        $this->errors = $this->errors->without($key);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setAsFailed(): void
+    public function setAsFailed(): self
     {
         $this->status = IResponse::STATUS_FAILED;
+
+        return $this;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function setAsSuccess(): void
+    public function setAsSuccess(): self
     {
         $this->status = IResponse::STATUS_SUCCESSFUL;
+
+        return $this;
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setStatusCode(AppResponseCode $statusCode): self
+    {
+        $this->statusCode = $statusCode->getValue();
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function jsonSerialize(): mixed
+    {   
+        $json = ['status' => $this->status];
+
+        if (!empty($this->data)) $json['data'] = $this->data;
+        if (!empty($this->error)) $json['error'] = $this->error;
+
+        return $json;
     }
 }

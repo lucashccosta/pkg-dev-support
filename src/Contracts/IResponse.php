@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Dev\Support\Contracts;
 
+use Dev\Support\Enums\AppResponseCode;
 use Dev\Support\Error\AppError;
 
 interface IResponse
@@ -17,22 +18,21 @@ interface IResponse
     /**
      * Add data to the data list by key.
      *
-     * @param string $key
-     * @param $value
+     * @param mixed $item
+     * @param string|null $key
      *
-     * @return void
+     * @return self
      */
-    public function addData(string $key, $value): void;
+    public function addData(mixed $item, ?string $key = null): self;
 
     /**
      * Add an Error to the error list by key.
      *
-     * @param string $key
      * @param AppError $error
-     *
-     * @return void
+     * 
+     * @return self
      */
-    public function addError(string $key, AppError $error): void;
+    public function addError(AppError $error): self;
 
     /**
      * Return the data list content.
@@ -44,9 +44,9 @@ interface IResponse
     /**
      * Return the error list content.
      *
-     * @return array
+     * @return AppError
      */
-    public function getErrors(): array;
+    public function getError(): AppError;
 
     /**
      * Return true if data list is not empty, otherwise return false.
@@ -60,7 +60,7 @@ interface IResponse
      *
      * @return bool
      */
-    public function hasErrors(): bool;
+    public function hasError(): bool;
 
     /**
      * Check if Response is failed.
@@ -77,34 +77,25 @@ interface IResponse
     public function isSuccessful(): bool;
 
     /**
-     * Remove data to the data list.
-     *
-     * @param string $key
-     *
-     * @return void
-     */
-    public function removeData(string $key): void;
-
-    /**
-     * Remove an Error to the error list.
-     *
-     * @param string $key
-     *
-     * @return void
-     */
-    public function removeError(string $key): void;
-
-    /**
      * Set the response as failed.
      *
-     * @return void
+     * @return self
      */
-    public function setAsFailed(): void;
+    public function setAsFailed(): self;
 
     /**
      * Set the response as success.
      *
-     * @return void
+     * @return self
      */
-    public function setAsSuccess(): void;
+    public function setAsSuccess(): self;
+
+    /**
+     *  Set the status code.
+     * 
+     * @param AppResponseCode $statusCode
+     * 
+     * @return self
+     */
+    public function setStatusCode(AppResponseCode $statusCode): self;
 }

@@ -4,27 +4,15 @@ declare(strict_types=1);
 
 namespace Dev\Support\Http;
 
-use Dev\Support\Common\CloneArrayTrait;
-use Dev\Support\Contracts\ICollection;
 use Dev\Support\Contracts\IRequest;
 
 class Request implements IRequest
 {
-    use CloneArrayTrait;
+    private array $items;
 
-    /**
-     * @var ICollection $collection
-     */
-    private $collection;
-
-    /**
-     * CollectionRequest constructor.
-     *
-     * @param ICollection $collection
-     */
-    public function __construct(ICollection $collection)
+    public function __construct(array $items = [])
     {
-        $this->collection = $collection;
+        $this->items = $items;
     }
 
     /**
@@ -32,7 +20,7 @@ class Request implements IRequest
      */
     public function all(): array
     {
-        return $this->collection->all();
+        return $this->items;
     }
 
     /**
@@ -40,18 +28,17 @@ class Request implements IRequest
      */
     public function clear(): self
     {
-        $clone = clone $this;
-        $clone->collection = $clone->collection->clear();
+        $this->items = [];
 
-        return $clone;
+        return $this;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function get(string $key, $default = null)
+    public function get(string $key, $default = null): mixed|null
     {
-        return $this->collection->get($key, $default);
+        return $this->items[$key] ?? $default;
     }
 
     /**
@@ -59,28 +46,26 @@ class Request implements IRequest
      */
     public function has(string $key): bool
     {
-        return $this->collection->has($key);
+        return isset($this->items[$key]);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function with(string $data, $key = null): self
+    public function add(string $key, mixed $item): self
     {
-        $clone = clone $this;
-        $clone->collection = $clone->collection->with($data, $key);
+        $this->items[$key] = $item;
 
-        return $clone;
+        return $this;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function without(string $key): self
+    public function remove(string $key): self
     {
-        $clone = clone $this;
-        $clone->collection = $clone->collection->without($key);
+        unset($this->items[$key]);
 
-        return $clone;
+        return $this;
     }
 }
