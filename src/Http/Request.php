@@ -62,6 +62,16 @@ class Request implements IRequest
     /**
      * {@inheritDoc}
      */
+    public function fill(array $items): self
+    {
+        $this->items = $items;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function remove(string $key): self
     {
         unset($this->items[$key]);

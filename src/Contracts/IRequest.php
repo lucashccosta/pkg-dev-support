@@ -49,6 +49,15 @@ interface IRequest
     public function add(string $key, mixed $item): self;
 
     /**
+     * Fill all request items
+     * 
+     * @param array $items
+     * 
+     * @return self
+     */
+    public function fill(array $items): self;
+
+    /**
      * Return a request without a specific key.
      *
      * @param mixed $key
