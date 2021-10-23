@@ -104,9 +104,10 @@ class Response implements IResponse, JsonSerializable
     /**
      * {@inheritDoc}
      */
-    public function setAsFailed(): self
+    public function setAsFailed(AppResponseCode $code = 500): self
     {
         $this->status = IResponse::STATUS_FAILED;
+        $this->statusCode = $code->getValue();
 
         return $this;
     }
@@ -114,9 +115,10 @@ class Response implements IResponse, JsonSerializable
     /**
      * {@inheritDoc}
      */
-    public function setAsSuccess(): self
+    public function setAsSuccess(AppResponseCode $code = 200): self
     {
         $this->status = IResponse::STATUS_SUCCESSFUL;
+        $this->statusCode = $code->getValue();
 
         return $this;
     }
