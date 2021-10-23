@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Dev\Support\Error;
+namespace Dev\Support\Common;
 
 use Dev\Support\Enums\AppResponseCode;
 use Dev\Support\Enums\AppErrorType;
+use JsonSerializable;
 
-class AppError
+class AppError implements JsonSerializable
 {
     private AppResponseCode $code;
     private AppErrorType $type;
@@ -67,5 +68,19 @@ class AppError
     public function getMeta(): array
     {
         return $this->meta;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function jsonSerialize(): mixed
+    {
+        return [
+            'code' => $this->code->getValue(),
+            'type' => $this->type->getValue(),
+            'public_message' => $this->publicMessage,
+            'private_message' => $this->privateMessage,
+            'metadata' => $this->meta
+        ];
     }
 }

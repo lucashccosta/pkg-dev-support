@@ -6,17 +6,17 @@ namespace Dev\Support\Http;
 
 use Dev\Support\Contracts\IResponse;
 use Dev\Support\Enums\AppResponseCode;
-use Dev\Support\Error\AppError;
+use Dev\Support\Common\AppError;
 use JsonSerializable;
 
 class Response implements IResponse, JsonSerializable
 {
     private string $status;
     private int $statusCode = 200;
-    private ?array $data = null;
+    private mixed $data = null;
     private ?AppError $error = null;
 
-    public function __construct(?array $data = null, ?AppError $error = null)
+    public function __construct(mixed $data = null, ?AppError $error = null)
     {
         $this->data = $data;
         $this->error = $error;
@@ -28,9 +28,9 @@ class Response implements IResponse, JsonSerializable
     /**
      * {@inheritDoc}
      */
-    public function addData(mixed $item, ?string $key = null): self
+    public function addData(mixed $item): self
     {
-        (!empty($key)) ? $this->data[$key] = $item : $this->data = $item;
+        $this->data = $item;
 
         return $this;
     }

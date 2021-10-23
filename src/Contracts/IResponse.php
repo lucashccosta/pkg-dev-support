@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Dev\Support\Contracts;
 
 use Dev\Support\Enums\AppResponseCode;
-use Dev\Support\Error\AppError;
+use Dev\Support\Common\AppError;
 
 interface IResponse
 {
@@ -19,11 +19,10 @@ interface IResponse
      * Add data to the data list by key.
      *
      * @param mixed $item
-     * @param string|null $key
      *
      * @return self
      */
-    public function addData(mixed $item, ?string $key = null): self;
+    public function addData(mixed $item): self;
 
     /**
      * Add an Error to the error list by key.
@@ -47,6 +46,11 @@ interface IResponse
      * @return AppError
      */
     public function getError(): AppError;
+
+    /**
+     * Return the status code.
+     */
+    public function getStatusCode(): int;
 
     /**
      * Return true if data list is not empty, otherwise return false.

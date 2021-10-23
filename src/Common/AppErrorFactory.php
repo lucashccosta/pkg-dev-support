@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Dev\Support\Error;
+namespace Dev\Support\Common;
 
 use Dev\Support\Enums\AppErrorType;
 use Dev\Support\Enums\AppResponseCode;
