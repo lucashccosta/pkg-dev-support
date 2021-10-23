@@ -36,7 +36,7 @@ class Request implements IRequest
     /**
      * {@inheritDoc}
      */
-    public function get(string $key, $default = null): mixed|null
+    public function get(string $key, $default = null): mixed
     {
         return $this->items[$key] ?? $default;
     }

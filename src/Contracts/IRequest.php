@@ -23,11 +23,11 @@ interface IRequest
      * Default if is not found.
      *
      * @param string $key
-     * @param mixed|null $default
+     * @param mixed $default
      *
      * @return mixed|null
      */
-    public function get(string $key, $default = null): mixed|null;
+    public function get(string $key, $default = null): mixed;
 
     /**
      * Return true if key is set, otherwise false.
