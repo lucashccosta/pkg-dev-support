@@ -18,11 +18,11 @@ interface IResponse
     /**
      * Add data to the data list by key.
      *
-     * @param mixed $item
+     * @param IArrayable $item
      *
      * @return self
      */
-    public function addData(mixed $item): self;
+    public function addData(IArrayable $item): self;
 
     /**
      * Add an Error to the error list by key.
@@ -106,4 +106,12 @@ interface IResponse
      * @return self
      */
     public function setStatusCode(AppResponseCode $statusCode): self;
+
+    /**
+     * Set the transformer
+     *
+     * @param ITransform $transformer
+     * @return self
+     */
+    public function setTransformer(ITransform $transformer): self;
 }

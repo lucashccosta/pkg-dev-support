@@ -7,17 +7,22 @@ namespace Dev\Support\Http;
 use Dev\Support\Contracts\IResponse;
 use Dev\Support\Enums\AppResponseCode;
 use Dev\Support\Common\AppError;
+use Dev\Support\Contracts\IArrayable;
+use Dev\Support\Contracts\ITransform;
 use JsonSerializable;
 
 class Response implements IResponse, JsonSerializable
 {
     private string $status;
     private int $statusCode = 200;
-    private mixed $data = null;
+    private ?IArrayable $data = null;
     private ?AppError $error = null;
+    private ?ITransform $transformer = null;
 
-    public function __construct(mixed $data = null, ?AppError $error = null)
-    {
+    public function __construct(
+        ?IArrayable $data = null, 
+        ?AppError $error = null
+    ) {
         $this->data = $data;
         $this->error = $error;
 
@@ -28,7 +33,7 @@ class Response implements IResponse, JsonSerializable
     /**
      * {@inheritDoc}
      */
-    public function addData(mixed $item): self
+    public function addData(IArrayable $item): self
     {
         $this->data = $item;
 
@@ -50,7 +55,7 @@ class Response implements IResponse, JsonSerializable
      */
     public function getData(): array
     {
-        return $this->data;
+        return $this->data->toArray();
     }
 
     /**
@@ -74,7 +79,11 @@ class Response implements IResponse, JsonSerializable
      */
     public function hasData(): bool
     {
-        return $this->data?->length() !== 0;
+        return (
+            !is_null($this->data)
+            ? count($this->data->toArray()) > 0
+            : 0
+        );
     }
 
     /**
@@ -145,12 +154,31 @@ class Response implements IResponse, JsonSerializable
     /**
      * {@inheritDoc}
      */
+    public function setTransformer(ITransform $transformer): self
+    {
+        $this->transformer = $transformer;
+
+        return $this;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function jsonSerialize(): mixed
     {   
         $json = ['status' => $this->status];
 
-        if (!empty($this->data)) $json['data'] = $this->data;
-        if (!empty($this->error)) $json['error'] = $this->error;
+        if (!empty($this->error)) {
+            $json['error'] = $this->error;
+        }
+
+        if (!empty($this->data)) {
+            $json['data'] = (
+                !empty($this->transformer)
+                ? $this->transformer->transform($this->data)
+                : $this->data
+            );
+        }
 
         return $json;
     }
