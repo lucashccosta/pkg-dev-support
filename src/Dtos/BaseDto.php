@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Dev\Support\Http;
+namespace Dev\Support\Dtos;
 
 use ReflectionClass;
 
